@@ -1,4 +1,4 @@
-.altimeter{
+.altimeter, .inputs{
     position: absolute;
 }
 .scale, .cover, .needle, .bug, .flag, .lightOn, .lightOff{
@@ -18,4 +18,8 @@
 }
 .lightOff{
     background: radial-gradient(rgb(0,0,0), rgb(255, 0, 0))
+}
+
+.inputs{
+    top: 600px;
 }
