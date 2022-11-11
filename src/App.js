@@ -12,22 +12,24 @@ import flagImg from './assets/radaltflag.png';
 function App() {
   const [altitude, setAlt] = useState(0);
   const [bug, setBug] = useState(0);
-
-
+  const [power, setPower] = useState(false);
+  console.log(power);
+  
   return (
     <div class="capsule">
       <div class="altimeter">
         <img src={scale} class="scale" />
+        
+        <AltitudeDial altitude = {altitude} power = {power}/>
+        <BugDial bug = {bug} power = {power}/>
         <img src={cover} class="cover"/>
-        <AltitudeDial altitude = {altitude}/>
-        <BugDial bug = {bug}/>
-        <Light/>
-        <img src={flagImg} class="flag"/>     
+        <Light altitude = {altitude} bug ={bug} power = {power}/>
+        <Flag power = {power}/>     
       </div>
       <div class="inputs">
         <div class="altInput">
           <label for="altitude" type="range">Altitude</label>
-          <input type="range" min="0" max="1500" defaultValue="0" onChange={(event) => setAlt(event.target.value)} class="slider" />
+          <input type="range" min="0" max="1500" step="1" defaultValue="0" onChange={power ? (event) => setAlt(event.target.value): null} class="slider" />
           <label for="bug" id="altitudeOutput">{altitude}</label>
         </div>
         <div class="bugInput">
@@ -36,8 +38,8 @@ function App() {
           <label for="bug" id="bugOutput">{bug}</label>
         </div>
         <div class="powerInput" type="checkbox">
-          <label for="power" >Power</label>
-          <input type="checkbox" class="powerButton" id="power" checked='false' />
+          <label  >Power</label>
+          <input type="checkbox" class="powerButton" value="true" onChange={(event) => setPower(!power)}/>
         </div>
       </div>
     </div>
@@ -46,7 +48,7 @@ function App() {
 
 function AltitudeDial(props){
   var rotation;
-  console.log(props.altitude);
+  //console.log(props.altitude);
   if(props.altitude <= 500){
     rotation = 0.36 * props.altitude;
   }
@@ -56,7 +58,7 @@ function AltitudeDial(props){
   let style = {
     transform: "rotate(" + rotation + "deg)"
   }
-  console.log(rotation);
+  //console.log(rotation);
   return(
     <img src={needle} class="needle" style={style}></img>
   );
@@ -73,19 +75,27 @@ function BugDial(props){
   let style = {
     transform: "rotate(" + rotation + "deg)"
   }
-  console.log(rotation);
+  //console.log(rotation);
   return(
     <img src={bugImg} class="bug" style={style}></img>
   );
 }
 
 function Light(props){
-  var [power, setPower] = useState(false);
-  return(
-    <span class="lightOff"></span>
-  );
+ if((props.bug - props.altitude >0) && props.power){
+  return(<span class="lightOn"/>)
+ }
+  return(<span class="lightOff"></span>)
 }
 
+function Flag(props){
+  if(props.power){
+    return <img hidden="hidden" src={flagImg} class="flag"/>   
+  }
+  else{
+    return <img src={flagImg} class="flag"/>   
+  }
+}
 
 
 
