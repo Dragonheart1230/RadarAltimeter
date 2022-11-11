@@ -1,7 +1,7 @@
 .altimeter, .inputs{
     position: absolute;
 }
-.scale, .cover, .needle, .bug, .flag, .lightOn, .lightOff{
+.scale, .cover,.needle,  .bug, .flag, .lightOn, .lightOff{
     position: inherit;
 }
 .lightOn, .lightOff{
